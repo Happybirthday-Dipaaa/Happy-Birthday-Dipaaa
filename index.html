@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spesial Buat Dipaaa</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <style>
+        :root {
+            --maroon-dark: #3a0202;
+            --maroon-light: #800000;
+            --gold-accent: #d4af37;
+            --soft-white: #f5f5f5;
+            --paper-color: #fcfaf0; 
+            /* Tambahkan warna Pink */
+            --pink-accent: #ff69b4;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at center, var(--maroon-light) 0%, var(--maroon-dark) 100%);
+            height: 100%; width: 100%;
+            overflow: hidden !important;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- ANIMASI CAHAYA MENGAMBANG --- */
+        .bokeh-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; pointer-events: none;
+        }
+        .bokeh {
+            position: absolute; bottom: -50px;
+            background: radial-gradient(circle, var(--gold-accent) 0%, rgba(212, 175, 55, 0) 70%);
+            border-radius: 50%; opacity: 0.3;
+            animation: floatUp 10s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            50% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* --- LOGIN SCREEN --- */
+        #login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--maroon-dark);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 9999; transition: all 1s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        .login-title { color: var(--gold-accent); margin-bottom: 20px; letter-spacing: 2px; text-align: center; }
+        .pin-dots { display: flex; gap: 15px; margin-bottom: 40px; }
+        .dot { width: 14px; height: 14px; border: 2px solid var(--gold-accent); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: var(--gold-accent); box-shadow: 0 0 15px var(--gold-accent); transform: scale(1.2); }
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .num-btn {
+            width: 70px; height: 70px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; color: var(--soft-white); cursor: pointer; transition: 0.3s;
+        }
+        .num-btn:active { background: var(--gold-accent); color: var(--maroon-dark); transform: scale(0.9); }
+
+        /* --- SWIPER CREATIVE (DENGAN EFEK BLUR) --- */
+        #main-container {
+            width: 100%; height: 100%;
+            display: none; justify-content: center; align-items: center;
+            perspective: 1200px;
+        }
+        .swiper { width: 85vw; max-width: 360px; height: 500px; overflow: visible !important; }
+
+        .swiper-slide {
+            background-color: var(--paper-color); border-radius: 20px; padding: 40px; box-sizing: border-box;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            /* --- EFEK BURAM AWAL --- */
+            filter: blur(8px);
+            opacity: 0.5;
+            transition: all 0.6s ease;
+        }
+
+        /* --- EFEK TAJAM SAAT AKTIF (DI TENGAH) --- */
+        .swiper-slide-active {
+            filter: blur(0px);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .swiper-slide.cover {
+            background: linear-gradient(135deg, #4a0404 0%, #3a0202 100%);
+            color: var(--gold-accent); border: 2px solid var(--gold-accent);
+        }
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--gold-accent); margin-bottom: 10px; }
+        p { font-size: 1rem; line-height: 1.6; color: #444; }
+        .divider { width: 50px; height: 2px; background: var(--gold-accent); margin: 15px auto; }
+
+        /* --- SURAT CINTA --- */
+        .letter-container {
+            cursor: pointer; position: relative; width: 100px; height: 70px;
+            background: var(--gold-accent); border-radius: 5px;
+            margin-top: 30px; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- PERBAIKAN: LOVE PINK & BERDENYUT --- */
+        .letter-heart { 
+            color: var(--pink-accent); 
+            font-size: 1.8rem; 
+            animation: heartBeat 1.2s infinite ease-in-out; 
+            filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.5));
+        }
+        @keyframes heartBeat { 
+            0%, 100% { transform: scale(1); } 
+            15% { transform: scale(1.25); } 
+            30% { transform: scale(1.1); } 
+            45% { transform: scale(1.2); } 
+        }
+
+        /* --- MODAL --- */
+        .modal { 
+            display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); justify-content: center; align-items: center;
+        }
+        .modal-content { 
+            background: linear-gradient(to bottom, #4a0404, #2d0202); 
+            padding: 30px; border-radius: 25px; border: 2px solid var(--gold-accent); 
+            width: 80%; max-width: 320px; text-align: center; color: white;
+            box-shadow: 0 0 40px var(--gold-accent); transform: scale(0.7); transition: 0.4s;
+        }
+        .modal.show .modal-content { transform: scale(1); }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 30px; cursor: pointer; color: var(--gold-accent); }
+        
+        #music-btn { position: fixed; top: 20px; right: 20px; z-index: 2000; background: var(--gold-accent); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; font-size: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="bokeh-container" id="bokeh"></div>
+
+    <div id="login-overlay">
+        <div class="login-title">Enter Passcode</div>
+        <div class="pin-dots">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="numpad">
+            <div class="num-btn" onclick="pressNum('1')">1</div><div class="num-btn" onclick="pressNum('2')">2</div><div class="num-btn" onclick="pressNum('3')">3</div>
+            <div class="num-btn" onclick="pressNum('4')">4</div><div class="num-btn" onclick="pressNum('5')">5</div><div class="num-btn" onclick="pressNum('6')">6</div>
+            <div class="num-btn" onclick="pressNum('7')">7</div><div class="num-btn" onclick="pressNum('8')">8</div><div class="num-btn" onclick="pressNum('9')">9</div>
+            <div style="width:70px"></div><div class="num-btn" onclick="pressNum('0')">0</div><div class="num-btn" onclick="clearPin()" style="font-size: 1rem;">CLR</div>
+        </div>
+        <p id="error-msg" style="color: #ff4d4d; margin-top: 20px; display: none;">Pin salah, San!</p>
+    </div>
+
+    <button id="music-btn" onclick="toggleMusic()">🎵</button>
+    <audio id="myAudio" loop><source src="anything.mp3" type="audio/mpeg"></audio>
+
+    <div id="main-container">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide cover">
+                    <h1>Spesial Buat Dipaaa</h1>
+                    <div class="divider"></div>
+                    <p>Geser ke samping ya...</p>
+                </div>
+                <div class="swiper-slide">
+                    <h1>Selamat Ulang Tahun!</h1>
+                    <div class="divider"></div>
+                    <p>Website ini adalah caraku untuk merayakan hari spesialmu meskipun jarak memisahkan kita.</p>
+                </div>
+                <div class="swiper-slide">
+                    <h1>Harapanku...</h1>
+                    <div class="divider"></div>
+                    <p>Semoga bahagia selalu menyertaimu di sana. Teruslah menjadi orang baik yang aku kenal.</p>
+                </div>
+                <div class="swiper-slide cover">
+                    <h1>Satu Pesan...</h1>
+                    <p style="color:var(--gold-accent)">Klik suratnya ya!</p>
+                    <div class="letter-container" onclick="openGift()">
+                        <div class="letter-heart">❤️</div>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.8rem; color:var(--gold-accent)">— Hasan —</p>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <div id="giftModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeGift()">&times;</span>
+            <h2 style="font-family: 'Dancing Script'; color: var(--gold-accent);">Isi Pesannya</h2>
+            <div class="divider"></div>
+            <p style="font-style: italic;">"Terima kasih sudah lahir ke dunia. Semoga kita bisa segera bertemu secara nyata. Happy Birthday! ❤️"</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const correctPin = "250304"; 
+        let currentPin = "";
+        const dots = document.querySelectorAll('.dot');
+        const audio = document.getElementById("myAudio");
+
+        // Generate Bokeh
+        const bokehContainer = document.getElementById('bokeh');
+        for (let i = 0; i < 15; i++) {
+            const div = document.createElement('div');
+            div.className = 'bokeh';
+            div.style.left = Math.random() * 100 + '%';
+            div.style.width = div.style.height = Math.random() * 40 + 20 + 'px';
+            div.style.animationDuration = Math.random() * 5 + 7 + 's';
+            div.style.animationDelay = Math.random() * 5 + 's';
+            bokehContainer.appendChild(div);
+        }
+
+        function pressNum(num) {
+            if (currentPin.length < 6) {
+                currentPin += num;
+                updateDots();
+                if (currentPin.length === 6) { checkPin(); }
+            }
+        }
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index < currentPin.length) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        }
+        function clearPin() { currentPin = ""; updateDots(); }
+        function checkPin() {
+            if (currentPin === correctPin) {
+                audio.play();
+                document.getElementById('music-btn').innerHTML = "⏸️";
+                document.getElementById('login-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('main-container').style.display = 'flex';
+                    initSwiper();
+                }, 1000);
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+                setTimeout(() => { document.getElementById('error-msg').style.display = 'none'; clearPin(); }, 1000);
+            }
+        }
+        function initSwiper() {
+            new Swiper(".mySwiper", {
+                effect: "creative",
+                creativeEffect: {
+                    prev: { shadow: true, translate: ["-125%", 0, -400], rotate: [0, 0, -20] },
+                    next: { shadow: true, translate: ["125%", 0, -400], rotate: [0, 0, 20] },
+                },
+                grabCursor: true,
+                pagination: { el: ".swiper-pagination", clickable: true },
+            });
+        }
+        function openGift() { 
+            const modal = document.getElementById("giftModal");
+            modal.style.display = "flex"; 
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+        function closeGift() { 
+            const modal = document.getElementById("giftModal");
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = "none", 400);
+        }
+        function toggleMusic() {
+            const btn = document.getElementById("music-btn");
+            if (audio.paused) { audio.play(); btn.innerHTML = "⏸️"; }
+            else { audio.pause(); btn.innerHTML = "🎵"; }
+        }
+    </script>
+</body>
+</html>
